@@ -102,3 +102,17 @@ header p {
   background-color: #1A237E;
   color: white;
 }
+
+.confirm {
+  margin: 0px 10px;
+  cursor: pointer;
+  border-bottom: 3px solid #1A237E;
+  transition: all 0.25s ease;
+  padding: 4px 8px;
+}
+
+.confirm:hover {
+  background-color: #1A237E;
+  border-bottom: 3px solid transparent;
+  color: white;
+}
