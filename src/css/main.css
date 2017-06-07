@@ -85,10 +85,20 @@ header p {
 }
 
 .bingo-item:hover {
-  background-color: #303F9F;
+  background-color: #3949AB;
   color: white;
 }
 
 .bingo-text {
   border: 10px solid transparent;
+}
+
+.selected {
+  background-color: #1A237E;
+  color: white;
+}
+
+.selected:hover {
+  background-color: #1A237E;
+  color: white;
 }
