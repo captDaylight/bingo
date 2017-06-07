@@ -53,3 +53,42 @@ input, input[type="text"], input[type="text"]:focus {
 form {
   margin-bottom: 0px;
 }
+
+header {
+  text-align: center;
+}
+
+header p {
+  font-size: 24px;
+}
+
+.bingo-row {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  margin-bottom: 0px;
+}
+
+.bingo-column {
+  width: 10%;
+  border: 10px solid transparent;
+  margin-bottom: 0px;
+}
+
+.bingo-item {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background-color: #CFD8DC;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.bingo-item:hover {
+  background-color: #303F9F;
+  color: white;
+}
+
+.bingo-text {
+  border: 10px solid transparent;
+}
