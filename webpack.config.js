@@ -1,36 +1,25 @@
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  entry: './app/javascripts/app.js',
+  devtool: 'cheap-module-eval-source-map',
+  entry: [
+    'webpack-hot-middleware/client',
+    './src/main'
+  ],
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'app.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
   plugins: [
-    // Copy our app's index.html to the build folder.
-    new CopyWebpackPlugin([
-      { from: './app/index.html', to: "index.html" }
-    ])
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
-    rules: [
-      {
-       test: /\.css$/,
-       use: [ 'style-loader', 'css-loader' ]
-      }
-    ],
-    loaders: [
-      { test: /\.json$/, use: 'json-loader' },
-      {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015'],
-          plugins: ['transform-runtime']
-        }
-      }
-    ]
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['react-hot-loader', 'babel-loader'],
+      include: path.join(__dirname, 'src')
+    }]
   }
-}
+};
