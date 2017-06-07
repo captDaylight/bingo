@@ -1,3 +1,6 @@
+import './css/normalize_skeleton.css';
+import './css/main.css';
+
 import { default as Web3 } from 'web3'
 import { default as contract } from 'truffle-contract'
 import React from 'react'

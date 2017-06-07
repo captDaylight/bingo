@@ -1,0 +1,55 @@
+
+
+body {
+  background-color: #ECEFF1;
+  color: #283593;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Rubik Mono One', sans-serif;
+}
+
+div, p, span {
+  font-family: 'Roboto Mono', monospace;
+}
+
+ul {
+  list-style: none;
+}
+
+header {
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+
+header .container {
+  border-bottom: 2px solid #283593;
+}
+
+header h2 {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+button {
+  background-color: #283593;
+  border-radius: 5px;
+  color: #E8EAF6;
+  font-family: 'Rubik Mono One', sans-serif;
+  border: none;
+  transition: all 0.25s ease;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #1A237E;
+  color: white;
+}
+
+input, input[type="text"], input[type="text"]:focus {
+  border: none;
+}
+
+form {
+  margin-bottom: 0px;
+}
