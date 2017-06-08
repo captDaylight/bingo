@@ -18,9 +18,10 @@ contract ChickenShitBingo {
   uint public numGames;
   mapping(uint => Game) public games;
 
-  function newGame(uint pricePerSquare, uint amountOfSquares) {
+  function newGame(uint pricePerSquare, uint amountOfSquares) returns (uint) {
     numGames = numGames++;
     games[numGames] = Game(pricePerSquare, amountOfSquares, 0, false);
+    return numGames;
   }
 
   function purchaseSquare(uint gameID, uint squareLocation) payable {

@@ -1,19 +1,42 @@
 import React, { Component } from 'react'
 import Board from './components/Board'
 
+import { default as Web3 } from 'web3'
+import { default as contract } from 'truffle-contract'
+import chickenshitbingo_artifacts from '../build/contracts/ChickenShitBingo.json'
+var ChickenShitBingo = contract(chickenshitbingo_artifacts)
+
 class Bingo extends Component {
   constructor() {
     super()
 
+    ChickenShitBingo.setProvider(web3.currentProvider)
+
     this.state = {
-      rowAndColumn: ''
+      rowAndColumn: '',
+      account: '',
     }
 
     this.selectSquare = this.selectSquare.bind(this)
   }
 
+  componentWillMount() {
+    web3.eth.getAccounts((err, accounts) => {
+      if (err != null) {
+        alert('There was an error fetching your accounts.')
+        return
+      }
+
+      if (accounts.length == 0) {
+        alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.')
+        return
+      }
+
+      this.setState({ account: accounts[0] })
+    });
+  }
+
   selectSquare(_rowAndColumn) {
-    console.log('selecting square', typeof _rowAndColumn);
     const { rowAndColumn } = this.state
 
     if (rowAndColumn === _rowAndColumn) {
@@ -25,7 +48,7 @@ class Bingo extends Component {
 
   render() {
     const { rowAndColumn } = this.state
-    console.log('rowAndColumn:', rowAndColumn.length);
+
     return (
       <div>
         <header>
@@ -34,7 +57,7 @@ class Bingo extends Component {
             rowAndColumn.length === 0
             ? <p>Select a square</p>
             : <p>
-              Purchase?
+              Purchase {rowAndColumn}?
               <span className="confirm">YES</span>
               <span className="confirm" onClick={() => this.selectSquare('')}>NO</span>
             </p>
