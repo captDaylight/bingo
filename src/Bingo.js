@@ -18,6 +18,7 @@ class Bingo extends Component {
     }
 
     this.selectSquare = this.selectSquare.bind(this)
+    this.confirmSquare = this.confirmSquare.bind(this)
   }
 
   componentWillMount() {
@@ -46,6 +47,19 @@ class Bingo extends Component {
     this.setState({ rowAndColumn: _rowAndColumn })
   }
 
+  confirmSquare() {
+    const { rowAndColumn, account } = this.state
+
+    ChickenShitBingo.deployed().then((instance) =>  {
+      return instance.purchaseSquare(1, 1, {from: account, value: 0.0001})
+    }).then((a) => {
+      console.log('purchased', a);
+    }).catch((e) => {
+      console.log(e)
+      self.setStatus('Error sending coin; see log.')
+    });
+  }
+
   render() {
     const { rowAndColumn } = this.state
 
@@ -58,11 +72,10 @@ class Bingo extends Component {
             ? <p>Select a square</p>
             : <p>
               Purchase {rowAndColumn}?
-              <span className="confirm">YES</span>
+              <span className="confirm" onClick={this.confirmSquare}>YES</span>
               <span className="confirm" onClick={() => this.selectSquare('')}>NO</span>
             </p>
           }
-
         </header>
 
         <Board rowAndColumn={rowAndColumn} selectSquare={this.selectSquare} />
