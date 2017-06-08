@@ -15,6 +15,7 @@ class Bingo extends Component {
     this.state = {
       rowAndColumn: '',
       account: '',
+      purchased: false,
     }
 
     this.selectSquare = this.selectSquare.bind(this)
@@ -51,30 +52,35 @@ class Bingo extends Component {
     const { rowAndColumn, account } = this.state
 
     ChickenShitBingo.deployed().then((instance) =>  {
-      return instance.purchaseSquare(1, 1, {from: account, value: 0.0001})
+      return instance.purchaseSquare(1, 1, {from: account, value: 10000000})
     }).then((a) => {
-      console.log('purchased', a);
+      this.setState({ purchased: true })
     }).catch((e) => {
       console.log(e)
       self.setStatus('Error sending coin; see log.')
     });
   }
 
+  renderInstructions(rowAndColumn) {
+    return rowAndColumn.length === 0
+      ? <p>Select a square</p>
+      : <p>
+        Purchase {rowAndColumn}?
+        <span className="confirm" onClick={this.confirmSquare}>YES</span>
+        <span className="confirm" onClick={() => this.selectSquare('')}>NO</span>
+      </p>
+  }
+
   render() {
-    const { rowAndColumn } = this.state
+    const { rowAndColumn, purchased } = this.state
 
     return (
       <div>
         <header>
           <h1 className="header">CHICKEN SHIT BINGO</h1>
-          {
-            rowAndColumn.length === 0
-            ? <p>Select a square</p>
-            : <p>
-              Purchase {rowAndColumn}?
-              <span className="confirm" onClick={this.confirmSquare}>YES</span>
-              <span className="confirm" onClick={() => this.selectSquare('')}>NO</span>
-            </p>
+          { purchased
+            ? <p>Congrats! You have purchased square {rowAndColumn}</p>
+            : this.renderInstructions(rowAndColumn)
           }
         </header>
 

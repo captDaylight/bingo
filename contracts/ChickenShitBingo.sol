@@ -8,7 +8,7 @@ contract ChickenShitBingo {
   }
 
   struct Game {
-      uint valuePool;
+      uint pool;
       uint amountOfSquares;
       uint numPlayers;
       bool ended;
@@ -31,6 +31,7 @@ contract ChickenShitBingo {
     if (!g.players[squareLocation].flag) {
       g.players[squareLocation] = Player(msg.sender, msg.value, true);
       g.numPlayers++;
+      g.pool += msg.value;
 
       // if all squares are filled, choose a winner and move funds
       if (g.numPlayers == g.amountOfSquares) {
