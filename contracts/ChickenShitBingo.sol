@@ -8,7 +8,7 @@ contract ChickenShitBingo {
   }
 
   struct Game {
-      uint pricePerSquare;
+      uint valuePool;
       uint amountOfSquares;
       uint numPlayers;
       bool ended;
@@ -18,9 +18,9 @@ contract ChickenShitBingo {
   uint public numGames;
   mapping(uint => Game) public games;
 
-  function newGame(uint pricePerSquare, uint amountOfSquares) returns (uint) {
+  function newGame(uint amountOfSquares) returns (uint) {
     numGames = numGames++;
-    games[numGames] = Game(pricePerSquare, amountOfSquares, 0, false);
+    games[numGames] = Game(0, amountOfSquares, 0, false);
     return numGames;
   }
 
@@ -45,7 +45,6 @@ contract ChickenShitBingo {
     /*if (g.ended)
       return false;*/
 
-    /*uint amount = g.pricePerSquare * g.amountOfSquares;*/
     g.ended = true;
   }
 }
