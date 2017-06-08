@@ -7,6 +7,8 @@ First run `testrpc` in a new tab. Then, `truffle compile` then `truffle migrate`
 
 To get the JS environment going, run `npm i` then `npm run start` to run the local server. You'll see it at `http://localhost:3000/`.
 
+![](https://media.giphy.com/media/3oKIPdVWOkxagFlI9W/giphy.gif)
+
 ## personal notes
 Moving funds from testrpc account to metamask account
 ```
