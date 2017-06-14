@@ -5,17 +5,24 @@ const columns = [ '1', '2', '3' ]
 
 class Board extends Component {
   render() {
-    const { selectSquare, rowAndColumn } = this.props
-
+    const { selectSquare, rowAndColumn, purchasedSquares } = this.props
+    console.log(purchasedSquares);
     return (
       <div>
-        {rows.map((r, i) => {
-          return <ul className="bingo-row" key={`${r}-${i}`}>
-            {columns.map((c, i) => {
-              return <li className="bingo-column" key={`${c}-${i}`}>
+        {rows.map((r, ridx) => {
+          return <ul className="bingo-row" key={`${r}-${ridx}`}>
+            {columns.map((c, cidx) => {
+              const squareLocation = (ridx * 3) + cidx
+              const isPurchased = purchasedSquares.includes(squareLocation)
+
+              return <li className="bingo-column" key={`${c}-${cidx}`}>
                 <div
-                  className={`bingo-item ${`${r}-${c}` === rowAndColumn ? 'selected' : ''}`}
-                  onClick={() => selectSquare(`${r}-${c}`) }
+                  className={`
+                    bingo-item
+                    ${`${r}-${c}` === rowAndColumn ? 'selected' : ''}
+                    ${isPurchased ? 'previously-purchased' : ''}
+                    `}
+                  onClick={() => selectSquare(`${r}-${c}`, squareLocation) }
                 >
                   <div className="bingo-text">{r} {c}</div>
                 </div>

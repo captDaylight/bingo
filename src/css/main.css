@@ -93,6 +93,10 @@ header p {
   border: 10px solid transparent;
 }
 
+.previously-purchased .bingo-text {
+  text-decoration: line-through;
+}
+
 .selected {
   background-color: #1A237E;
   color: white;
@@ -100,6 +104,16 @@ header p {
 
 .selected:hover {
   background-color: #1A237E;
+  color: white;
+}
+
+.previously-purchased {
+  background-color: #FFC107;
+  color: white;
+}
+
+.previously-purchased:hover {
+  background-color: #FFC107;
   color: white;
 }
 

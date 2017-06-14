@@ -14,8 +14,10 @@ class Bingo extends Component {
 
     this.state = {
       rowAndColumn: '',
+      squareLocation: -1,
       account: '',
       purchased: false,
+      purchasedSquares: [],
     }
 
     this.selectSquare = this.selectSquare.bind(this)
@@ -35,24 +37,33 @@ class Bingo extends Component {
       }
 
       this.setState({ account: accounts[0] })
+
+      ChickenShitBingo.deployed().then((instance) =>  {
+        return instance.getPurchasedSquares(1)
+      }).then((squares) => {
+        this.setState({ purchasedSquares: squares.map(s => s.c[0]) })
+      })
     });
   }
 
-  selectSquare(_rowAndColumn) {
+  selectSquare(_rowAndColumn, _squareLocation) {
     const { rowAndColumn } = this.state
 
     if (rowAndColumn === _rowAndColumn) {
-      return this.setState({ rowAndColumn: '' })
+      return this.setState({ rowAndColumn: '', squareLocation: -1 })
     }
 
-    this.setState({ rowAndColumn: _rowAndColumn })
+    this.setState({
+      rowAndColumn: _rowAndColumn,
+      squareLocation: _squareLocation,
+    })
   }
 
   confirmSquare() {
-    const { rowAndColumn, account } = this.state
+    const { squareLocation, account } = this.state
 
     ChickenShitBingo.deployed().then((instance) =>  {
-      return instance.purchaseSquare(1, 1, {from: account, value: 10000000})
+      return instance.purchaseSquare(1, squareLocation, {from: account, value: 10000000})
     }).then((a) => {
       this.setState({ purchased: true })
     }).catch((e) => {
@@ -72,7 +83,7 @@ class Bingo extends Component {
   }
 
   render() {
-    const { rowAndColumn, purchased } = this.state
+    const { rowAndColumn, purchased, purchasedSquares } = this.state
 
     return (
       <div>
@@ -84,7 +95,11 @@ class Bingo extends Component {
           }
         </header>
 
-        <Board rowAndColumn={rowAndColumn} selectSquare={this.selectSquare} />
+        <Board
+          rowAndColumn={rowAndColumn}
+          selectSquare={this.selectSquare}
+          purchasedSquares={purchasedSquares}
+        />
       </div>
     )
   }
