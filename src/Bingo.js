@@ -22,6 +22,7 @@ class Bingo extends Component {
 
     this.selectSquare = this.selectSquare.bind(this)
     this.confirmSquare = this.confirmSquare.bind(this)
+    this.getPurchasedSquares = this.getPurchasedSquares.bind(this)
   }
 
   componentWillMount() {
@@ -37,12 +38,7 @@ class Bingo extends Component {
       }
 
       this.setState({ account: accounts[0] })
-
-      ChickenShitBingo.deployed().then((instance) =>  {
-        return instance.getPurchasedSquares(1)
-      }).then((squares) => {
-        this.setState({ purchasedSquares: squares.map(s => s.c[0]) })
-      })
+      this.getPurchasedSquares()
     });
   }
 
@@ -65,7 +61,8 @@ class Bingo extends Component {
     ChickenShitBingo.deployed().then((instance) =>  {
       return instance.purchaseSquare(1, squareLocation, {from: account, value: 10000000})
     }).then((a) => {
-      this.setState({ purchased: true })
+      this.setState({ purchased: true, rowAndColumn: '', squareLocation: -1 })
+      this.getPurchasedSquares()
     }).catch((e) => {
       console.log(e)
       self.setStatus('Error sending coin; see log.')
@@ -82,6 +79,14 @@ class Bingo extends Component {
       </p>
   }
 
+  getPurchasedSquares() {
+    ChickenShitBingo.deployed().then((instance) =>  {
+      return instance.getPurchasedSquares(1)
+    }).then((squares) => {
+      this.setState({ purchasedSquares: squares.map(s => s.c[0]) })
+    })
+  }
+
   render() {
     const { rowAndColumn, purchased, purchasedSquares } = this.state
 
@@ -90,7 +95,7 @@ class Bingo extends Component {
         <header>
           <h1 className="header">CHICKEN SHIT BINGO</h1>
           { purchased
-            ? <p>Congrats! You have purchased square {rowAndColumn}</p>
+            ? <p>Congrats, your purchase went through!</p>
             : this.renderInstructions(rowAndColumn)
           }
         </header>
